@@ -28,7 +28,7 @@ jobs:
                   sudo apt-get install -y doxygen
           
             - name: Create output directory
-              run: mkdir build/docs
+              run: mkdir -p build/docs
               
             - name: Create doxygen documentation
               run: doxygen ./docs/Doxyfile.in
