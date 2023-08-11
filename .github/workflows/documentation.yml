@@ -7,8 +7,8 @@ name: Rail horizon Documentation
 on:
     push:
         branches:
-            - main    
-    workflow_dispatch:
+#             - main    
+            - '**'
 
 permissions:
     contents: write
