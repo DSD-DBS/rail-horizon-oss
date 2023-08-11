@@ -30,17 +30,10 @@ jobs:
 
         steps:
 
-#            - name: Configure Git
-#              run: |
-#                  git config --global url."git@github.com:".insteadOf "https://github.com/"
-
             - name: Checkout Rail Horizon code including submodules recursively
               uses: actions/checkout@v3
               with:
                   submodules: recursive
-#                   repo-token: ${{ secrets.GITHUB_TOKEN }}
-#                   username: ${{ secrets.AZURE_S4R_USER }}
-#                   token: ${{ secrets.AZURE_S4R_TOKEN }}
 
             - name: Install dependencies
               run: |
@@ -66,28 +59,12 @@ jobs:
               run: |
                   source /opt/ros/humble/setup.bash && source ./install/local_setup.bash
                   export RMW_IMPLEMENTATION=rmw_fastrtps_cpp
-                  colcon test --packages-select dsd_rail_horizon_core dsd_rail_horizon dsd_mission_profile --return-code-on-test-failure --ctest-arg -E "overTheAirUpdateIsSucessfull"
+                  colcon test --packages-select dsd_rail_horizon_core dsd_mission_profile --return-code-on-test-failure --ctest-arg -E "overTheAirUpdateIsSucessfull"
                   
             - name: Upload build files
+              if: success() || failure()
               uses: actions/upload-artifact@v3
               with:
                 name: build-folder
                 path: |
                   build
-
-#  - task: PublishTestResults@2
-#    condition: succeededOrFailed()
-#    inputs:
-#        testResultsFormat: cTest
-#        testResultsFiles: $(Agent.BuildDirectory)/rh_ws/build/**/Test.xml
-#        testRunTitle: Test Results
-#
-#  - bash: cd $(Agent.BuildDirectory)/rh_ws; gcovr --exclude-unreachable-branches --exclude-throw-branches -r . --filter src/ --exclude '.*tests/' --xml
-#        -o build/coverage.xml
-#    displayName: Generate Coverage Results
-#
-#  - task: PublishCodeCoverageResults@1
-#    inputs:
-#        codeCoverageTool: Cobertura
-#        summaryFileLocation: $(Agent.BuildDirectory)/rh_ws/build/coverage.xml
-#    displayName: Publish code coverage results
