@@ -1,0 +1,12 @@
+digraph "MarkerStructurePublisher"
+{
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node1 [label="MarkerStructurePublisher",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip="Marker Structures publisher for publishing markers for different structure types."];
+  Node2 -> Node1 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" position_marker_publisher_" ,fontname="Helvetica"];
+  Node2 [label="IPublisher\< visualization\l_msgs::msg::Marker \>",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classIPublisher.html",tooltip=" "];
+  Node3 -> Node1 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" body_structure_marker\l_publisher_\nhorizontal_structure\l_marker_publisher_\nplane_structure_marker\l_publisher_\nvertical_structure_marker\l_publisher_" ,fontname="Helvetica"];
+  Node3 [label="IPublisher\< visualization\l_msgs::msg::MarkerArray \>",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classIPublisher.html",tooltip=" "];
+}

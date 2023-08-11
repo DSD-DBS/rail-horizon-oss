@@ -1,0 +1,11 @@
+digraph "AppStatusPublisher"
+{
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  Node1 [label="AppStatusPublisher",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip="Application status publisher for publishing application status messages."];
+  Node2 -> Node1 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" app_status_publisher_" ,fontname="Helvetica"];
+  Node2 [label="IPublisher\< AppStatusMessage \>",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classIPublisher.html",tooltip=" "];
+  Node3 -> Node1 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" config_" ,fontname="Helvetica"];
+  Node3 [label="AppStatusPublisherConfig",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structAppStatusPublisherConfig.html",tooltip="Config parameters for the application status publisher."];
+}
