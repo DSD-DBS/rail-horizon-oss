@@ -1,0 +1,86 @@
+---
+# SPDX-FileCopyrightText: Copyright DB Netz AG
+# SPDX-License-Identifier: CC0-1.0
+
+name: Rail Horizon CI
+
+on:
+    push:
+        branches:
+            - '**'
+    pull_request:
+        branches:
+            - '**'
+
+env:
+    GOPRIVATE: github.com/DSD-DBS/*
+    DB_MAP_VERSION: 12
+    DB_MAP_ENDPOINT: DB_LAN
+    DB_MAP_CATALOG: validate.s4r2.oss.4
+    PERSISTENT_STORAGE_ROOT_DIR: ./hdmap
+    RMW_IMPLEMENTATION: rmw_fastrtps_cpp
+
+jobs:
+    build:
+        runs-on: ubuntu-22.04
+
+        defaults:
+            run:
+                shell: bash
+
+        steps:
+
+#            - name: Configure Git
+#              run: |
+#                  git config --global url."git@github.com:".insteadOf "https://github.com/"
+
+            - name: Checkout Rail Horizon code including submodules recursively
+              uses: actions/checkout@v3
+              with:
+                  submodules: recursive
+#                   repo-token: ${{ secrets.GITHUB_TOKEN }}
+#                   username: ${{ secrets.AZURE_S4R_USER }}
+#                   token: ${{ secrets.AZURE_S4R_TOKEN }}
+
+            - name: Install dependencies
+              run: |
+                  sudo apt install software-properties-common && sudo add-apt-repository universe -y
+                  sudo apt update && sudo apt install curl libcurl4-openssl-dev -y
+                  sudo curl -sSL https://raw.githubusercontent.com/ros/rosdistro/master/ros.key -o /usr/share/keyrings/ros-archive-keyring.gpg
+                  sudo sh -c 'echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/ros-archive-keyring.gpg] http://packages.ros.org/ros2/ubuntu $(. /etc/os-release && echo $UBUNTU_CODENAME) main" | tee /etc/apt/sources.list.d/ros2.list'
+                  sudo apt update -y
+                  sudo apt install ros-humble-ros-base python3-colcon-common-extensions ros-humble-ament* ros-humble-rmw-fastrtps-cpp -y
+                  sudo apt install libprotobuf-dev protobuf-c-compiler protobuf-compiler -y
+                  sudo apt install libboost-all-dev -y
+                  sudo apt install libproj-dev -y
+                  sudo apt-get install gcovr -y
+
+            - name: Build Rail Horizon
+              run: |
+                  source /opt/ros/humble/setup.bash
+                  export RMW_IMPLEMENTATION=rmw_fastrtps_cpp
+                  colcon build --base-paths src --cmake-args -DCMAKE_BUILD_TYPE=Debug -DCMAKE_EXPORT_COMPILE_COMMANDS=ON --event-handlers console_cohesion+ --packages-up-to dsd_rail_horizon
+                  colcon build --base-paths src --cmake-args -DCMAKE_BUILD_TYPE=Debug -DCMAKE_EXPORT_COMPILE_COMMANDS=ON --event-handlers console_cohesion+ --packages-up-to dsd_mission_profile
+
+            - name: Run tests
+              run: |
+                  source /opt/ros/humble/setup.bash && source ./install/local_setup.bash
+                  export RMW_IMPLEMENTATION=rmw_fastrtps_cpp
+                  colcon test --packages-select dsd_rail_horizon_core dsd_rail_horizon dsd_mission_profile --return-code-on-test-failure --ctest-arg -E "overTheAirUpdateIsSucessfull"
+
+#  - task: PublishTestResults@2
+#    condition: succeededOrFailed()
+#    inputs:
+#        testResultsFormat: cTest
+#        testResultsFiles: $(Agent.BuildDirectory)/rh_ws/build/**/Test.xml
+#        testRunTitle: Test Results
+#
+#  - bash: cd $(Agent.BuildDirectory)/rh_ws; gcovr --exclude-unreachable-branches --exclude-throw-branches -r . --filter src/ --exclude '.*tests/' --xml
+#        -o build/coverage.xml
+#    displayName: Generate Coverage Results
+#
+#  - task: PublishCodeCoverageResults@1
+#    inputs:
+#        codeCoverageTool: Cobertura
+#        summaryFileLocation: $(Agent.BuildDirectory)/rh_ws/build/coverage.xml
+#    displayName: Publish code coverage results

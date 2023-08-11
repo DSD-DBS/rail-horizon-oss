@@ -1,0 +1,12 @@
+# SPDX-FileCopyrightText: Copyright DB Netz AG
+# SPDX-License-Identifier: CC0-1.0
+
+PROJECT_NAME           = "Rail Horizon"
+PROJECT_BRIEF          = "ROS2 Node that provides a map and mission foresight in form of a ROS Message"
+IMAGE_PATH             = "docs/images/rviz_RH.png"
+INPUT                  = "README.md" "docs/images" "src/dsd_mission_profile/include" "src/dsd_rail_horizon/include" "src/dsd_rail_horizon_core/include"
+USE_MDFILE_AS_MAINPAGE = "README.md"
+RECURSIVE              = YES
+GENERATE_LATEX         = NO
+OUTPUT_DIRECTORY       = "build/docs"
+HTML_EXTRA_STYLESHEET = docs/custom.css

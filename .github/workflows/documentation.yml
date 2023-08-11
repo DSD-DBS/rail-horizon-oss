@@ -1,0 +1,36 @@
+---
+# SPDX-FileCopyrightText: Copyright DB Netz AG
+# SPDX-License-Identifier: CC0-1.0
+
+name: Rail horizon Documentation
+
+on:
+    push:
+        branches:
+            - main
+
+permissions:
+    contents: write
+
+jobs:
+    build:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout Rail Horizon code including submodules recursively
+              uses: actions/checkout@v2
+              with:
+                  submodules: recursive
+
+            - name: Install dependencies
+              run: |
+                  sudo apt-get update -y
+                  sudo apt-get install -y doxygen
+
+            - name: Create doxygen documentation
+              run: doxygen ./docs/Doxyfile.in
+
+            - name: Deploy to GitHub Pages
+              uses: JamesIves/github-pages-deploy-action@4.1.5
+              with:
+                  folder: build/docs/html
+                  branch: gh-pages

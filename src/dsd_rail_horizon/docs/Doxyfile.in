@@ -1,0 +1,9 @@
+# SPDX-FileCopyrightText: Copyright DB Netz AG
+# SPDX-License-Identifier: CC0-1.0
+
+PROJECT_NAME           = "@PROJECT_NAME@"
+PROJECT_BRIEF          = "@PROJECT_BRIEF@"
+INPUT                  = "@CMAKE_CURRENT_SOURCE_DIR@/../include"
+RECURSIVE              = YES
+GENERATE_LATEX         = NO
+OUTPUT_DIRECTORY       = "@CMAKE_CURRENT_BINARY_DIR@"

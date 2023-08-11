@@ -1,0 +1,128 @@
+---
+# SPDX-FileCopyrightText: Copyright DB Netz AG
+# SPDX-License-Identifier: CC0-1.0
+
+repos:
+    - repo: https://github.com/Lucas-C/pre-commit-hooks
+      rev: v1.5.1
+      hooks:
+          - id: insert-license
+            name: Insert license headers (Markdown)
+            args:
+                - --detect-license-in-X-top-lines=15
+                - --license-filepath
+                - LICENSES/.license_header_cc0.txt
+                - --comment-style
+                - <!--| ~| -->
+            types_or: [markdown]
+            files: ''
+          - id: insert-license
+            name: Insert license headers (XML)
+            args:
+                - --detect-license-in-X-top-lines=15
+                - --license-filepath
+                - LICENSES/.license_header_cc0.txt
+                - --insert-license-after-regex
+                - ^<\?xml.*\?>
+                - --comment-style
+                - <!--| ~| -->
+            types_or: [xml]
+            files: ''
+          - id: insert-license
+            name: Insert license headers (C, C++, CSS)
+            args:
+                - --detect-license-in-X-top-lines=15
+                - --license-filepath
+                - LICENSES/.license_header.txt
+                - --comment-style
+                - /*| *| */
+            types_or: [c, c++, css]
+            files: ''
+          - id: insert-license
+            name: Insert license headers (Python)
+            args:
+                - --detect-license-in-X-top-lines=15
+                - --license-filepath
+                - LICENSES/.license_header.txt
+                - --comment-style
+                - '#'
+            types_or: [python]
+            files: ''
+          - id: insert-license
+            name: Insert license headers (CMake, Shell)
+            args:
+                - --detect-license-in-X-top-lines=15
+                - --license-filepath
+                - LICENSES/.license_header_cc0.txt
+                - --comment-style
+                - '#'
+            types_or: [gitmodules, gitignore, cmake, shell]
+            files: ''
+          - id: insert-license
+            name: Insert license headers (YAML)
+            args:
+                - --detect-license-in-X-top-lines=15
+                - --license-filepath
+                - LICENSES/.license_header_cc0.txt
+                - --insert-license-after-regex
+                - ^---$
+                - --comment-style
+                - '#'
+            types_or: [yaml]
+            files: ''
+          - id: insert-license
+            name: Insert license headers (Doxyfile)
+            args:
+                - --detect-license-in-X-top-lines=15
+                - --license-filepath
+                - LICENSES/.license_header_cc0.txt
+                - --comment-style
+                - '#'
+            files: Doxyfile
+    - repo: https://github.com/pre-commit/pre-commit-hooks
+      rev: v4.4.0
+      hooks:
+          - id: mixed-line-ending
+            args: [--fix=lf]
+          - id: trailing-whitespace
+    - repo: https://github.com/jumanjihouse/pre-commit-hook-yamlfmt
+      rev: 0.2.3
+      hooks:
+          - id: yamlfmt
+    - repo: https://github.com/pre-commit/mirrors-yapf
+      rev: v0.32.0
+      hooks:
+          - id: yapf
+    - repo: https://github.com/pocc/pre-commit-hooks
+      rev: v1.3.5
+      hooks:
+          - id: clang-format
+            args: [-i]
+          - id: clang-tidy
+      # More agressive fixing, but not as reliably
+      # args: ["-p=build", "--fix-notes", "--fix-errors", "-extra-arg=-ferror-limit=0"]
+            args: [-p=build, --fix]
+    - repo: https://github.com/cheshirekow/cmake-format-precommit
+      rev: v0.6.13
+      hooks:
+          - id: cmake-format
+            additional_dependencies: [pyyaml==5.3.1]
+            exclude: CPM.cmake
+    # verbose: true
+          - id: cmake-lint
+            exclude: CPM.cmake
+    - repo: local
+      hooks:
+          - id: include-what-you-use
+            name: include-what-you-use
+            entry: python ./tools/iwyu_precommit.py
+            language: python
+            pass_filenames: true
+            verbose: true
+            require_serial: true
+            types: [c++]
+            stages: [manual]
+    - repo: https://github.com/fsfe/reuse-tool
+      rev: v2.1.0
+      hooks:
+          - id: reuse

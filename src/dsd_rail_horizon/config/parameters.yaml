@@ -1,0 +1,41 @@
+---
+# SPDX-FileCopyrightText: Copyright DB Netz AG
+# SPDX-License-Identifier: CC0-1.0
+
+rail_horizon_publisher:
+    ros__parameters:
+        rail_horizon_namespace: /rail_horizon/
+        rail_horizon_topic: rail_horizon
+        rail_horizon_frame_id: rail_horizon
+        rail_horizon_marker_reference_frame: train
+        rail_horizon_marker_position_topic: marker/position
+        rail_horizon_marker_vertical_structure_topic: marker/vertical_structures
+        rail_horizon_marker_horizontal_structure_topic: marker/horizontal_structures
+        rail_horizon_marker_plane_structure_topic: marker/plane_structures
+        rail_horizon_marker_body_structure_topic: marker/body_structures
+        rail_horizon_topic_frequency: 1
+        rail_horizon_global_horizon: true
+        rail_horizon_local_horizon: false
+        rail_horizon_local_horizon_apply_rotations: false
+        rail_horizon_markers: true
+        rail_horizon_virtual_centerline: true
+        rail_horizon_left_right_rail: false
+        application_configuration_topic: /system_config
+        application_status_topic: /app_status
+        mission_control_supervision: false
+        mission_control_app_id: rail_horizon
+        mission_control_node_id: node_1
+        mission_profile_apply: true
+        mission_profile_topic: /mission_profile
+        coupled_localization_topic: /coupled_localization
+        coupled_localization_use_geoid: false
+        spoof_gnss_position: true
+        gnss_position: [10.131524972366783, 53.498649583384044, 63.99] # Mittlerer Landweg
+        #gnss_position: [10.205911539920013, 53.490093170540035, 63.99] # Bergedorf
+        gnss_rotation: [0.0, 0.0, 0.0]
+        gnss_swap_lat_lon: false
+        map_roi: [9.991913, 53.477225, 10.237787, 53.567761] # map_roi - region of interest
+        map_foresight: 500.0
+        map_use_geoid: false
+        map_ota_update: false
+        dds_qos: 3

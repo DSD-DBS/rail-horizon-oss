@@ -1,0 +1,64 @@
+---
+# SPDX-FileCopyrightText: Copyright DB Netz AG
+# SPDX-License-Identifier: CC0-1.0
+
+# google-readability-avoid-underscore-in-googletest-name: The rationale behind this is explained in the GTest FAQ. Basically, it avoids illegal or duplicated names created by GTest based on the inputs to TEST_F.
+# -readability-function-size, -readability-function-cognitive-complexity: Disabled because our functions are too complex at the moment and refactoring needs to be done separately.
+# -modernize-concat-nested-namespaces: We don't actually use C++17 yet, so we need to disable C++17 fixes.
+# -cppcoreguidelines-non-private-member-variables-in-classes, -misc-non-private-member-variables-in-classes: They make our code more complex without much benefit.
+# -cppcoreguidelines-pro-type-vararg: Many false positives due to macro usage in ROS2.
+# -cppcoreguidelines-pro-bounds-array-to-pointer-decay: Many false positives due to macro usage in ROS2.
+# -modernize-use-trailing-return-type: We don't follow this style.
+# -modernize-pass-by-value: Might be considered at a later point.
+# -modernize-avoid-bind: For now disabled. We use std::bind in many cases, where std::bind_front would be a better fit if we had C++20
+Checks: >-
+    -*,
+    readability-*
+    -readability-function-cognitive-complexity,
+    -readability-function-size,
+    bugprone-*,
+    cppcoreguidelines-*,
+    -cppcoreguidelines-non-private-member-variables-in-classes,
+    -cppcoreguidelines-pro-type-vararg,
+    -cppcoreguidelines-pro-bounds-array-to-pointer-decay,
+    modernize-*,
+    -modernize-use-trailing-return-type,
+    -modernize-pass-by-value,
+    -modernize-concat-nested-namespaces,
+    -modernize-avoid-bind,
+    misc-*,
+    -misc-non-private-member-variables-in-classes,
+    google-readability-avoid-underscore-in-googletest-name
+WarningsAsErrors: false
+HeaderFilterRegex: .*
+CheckOptions:
+    - key: readability-identifier-naming.ClassCase
+      value: CamelCase
+    - key: readability-identifier-naming.StructCase
+      value: CamelCase
+    - key: readability-identifier-naming.MethodCase
+      value: lower_case
+    - key: readability-identifier-naming.VariableCase
+      value: lower_case
+    - key: readability-identifier-naming.ParameterCase
+      value: lower_case
+    - key: readability-identifier-naming.MemberSuffix
+      value: _
+    - key: readability-identifier-naming.FunctionCase
+      value: lower_case
+    - key: readability-identifier-naming.EnumCase
+      value: CamelCase
+    - key: readability-identifier-naming.EnumConstantCase
+      value: UPPER_CASE
+    - key: readability-identifier-naming.MacroDefinitionCase
+      value: UPPER_CASE
+    - key: readability-identifier-naming.NamespaceCase
+      value: lower_case
+    - key: readability-identifier-naming.TemplateParameterCase
+      value: CamelCase
+    - key: readability-identifier-naming.ValueTemplateParameterCase
+      value: lower_case
+    - key: readability-identifier-naming.TypedefCase
+      value: CamelCase
+    - key: readability-implicit-bool-conversion.AllowPointerConditions
+      value: true

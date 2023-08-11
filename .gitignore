@@ -1,0 +1,13 @@
+# SPDX-FileCopyrightText: Copyright DB Netz AG
+# SPDX-License-Identifier: CC0-1.0
+
+.DS_Store
+
+# ROS2 output folder
+build
+install
+install_old
+log
+
+# Clangd cache
+.cache

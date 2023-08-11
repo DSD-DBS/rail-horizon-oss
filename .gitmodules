@@ -1,0 +1,18 @@
+# SPDX-FileCopyrightText: Copyright DB Netz AG
+# SPDX-License-Identifier: CC0-1.0
+
+[submodule "src/dsd_mission_profile"]
+	path = src/dsd_mission_profile
+	url = https://github.com/DSD-DBS/mission-profile-oss.git
+[submodule "src/dsd_ros_messages"]
+	path = src/dsd_ros_messages
+	url = https://github.com/DSD-DBS/dsd-ros-msg-definitions-oss.git
+[submodule "submodules/external/googletest"]
+	path = submodules/external/googletest
+	url = https://github.com/google/googletest.git
+[submodule "src/dsd_common_types"]
+	path = src/dsd_common_types
+	url = https://github.com/DSD-DBS/rail-horizon-common-types-oss.git
+[submodule "submodules/internal/map-service"]
+	path = submodules/internal/map-service
+	url = https://github.com/DSD-DBS/dbs-onboard-map-api.git
