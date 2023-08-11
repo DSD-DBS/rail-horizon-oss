@@ -67,6 +67,13 @@ jobs:
                   source /opt/ros/humble/setup.bash && source ./install/local_setup.bash
                   export RMW_IMPLEMENTATION=rmw_fastrtps_cpp
                   colcon test --packages-select dsd_rail_horizon_core dsd_rail_horizon dsd_mission_profile --return-code-on-test-failure --ctest-arg -E "overTheAirUpdateIsSucessfull"
+                  
+            - name: Upload build files
+              uses: actions/upload-artifact@v3
+              with:
+                name: build-folder
+                path: |
+                  build
 
 #  - task: PublishTestResults@2
 #    condition: succeededOrFailed()
