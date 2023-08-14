@@ -3,7 +3,9 @@
  ~ SPDX-License-Identifier: CC0-1.0
  -->
 
-[![Rail horizon Documentation](https://github.com/DSD-DBS/rail-horizon-oss/actions/workflows/documentation.yml/badge.svg?branch=main)](https://github.com/DSD-DBS/rail-horizon-oss/actions/workflows/documentation.yml)
+[![Rail Horizon Build](https://github.com/DSD-DBS/rail-horizon-oss/actions/workflows/main.yml/badge.svg)](https://github.com/DSD-DBS/rail-horizon-oss/actions/workflows/main.yml)
+
+[![Rail Horizon Documentation](https://github.com/DSD-DBS/rail-horizon-oss/actions/workflows/documentation.yml/badge.svg?branch=main)](https://github.com/DSD-DBS/rail-horizon-oss/actions/workflows/documentation.yml)
 
 # Rail Horizon
 
