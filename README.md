@@ -3,6 +3,8 @@
  ~ SPDX-License-Identifier: CC0-1.0
  -->
 
+[![Rail horizon Documentation](https://github.com/DSD-DBS/rail-horizon-oss/actions/workflows/documentation.yml/badge.svg?branch=main)](https://github.com/DSD-DBS/rail-horizon-oss/actions/workflows/documentation.yml)
+
 # Rail Horizon
 
 Rail Horizon is a ROS2 Node which provides train map foresight (an excerpt of digital map data) by processing mission profile, map regions and coupled localization data. The train map foresight is provided in a form of a ROS Message called RailHorizonStamped, containing the map data in a local sensor coordinate system and global coordinate system.

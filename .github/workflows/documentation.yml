@@ -7,7 +7,8 @@ name: Rail horizon Documentation
 on:
     push:
         branches:
-            - main
+#             - main    
+            - '**'
 
 permissions:
     contents: write
@@ -25,7 +26,10 @@ jobs:
               run: |
                   sudo apt-get update -y
                   sudo apt-get install -y doxygen
-
+          
+            - name: Create output directory
+              run: mkdir -p build/docs
+              
             - name: Create doxygen documentation
               run: doxygen ./docs/Doxyfile.in
 
