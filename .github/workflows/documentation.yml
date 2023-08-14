@@ -2,7 +2,7 @@
 # SPDX-FileCopyrightText: Copyright DB Netz AG
 # SPDX-License-Identifier: CC0-1.0
 
-name: Rail horizon Documentation
+name: Rail Horizon Documentation
 
 on:
     push:
