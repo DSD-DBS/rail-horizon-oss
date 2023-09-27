@@ -23,13 +23,10 @@ env:
 jobs:
     build:
         runs-on: ubuntu-22.04
-
         defaults:
             run:
                 shell: bash
-
         steps:
-
             - name: Checkout Rail Horizon code including submodules recursively
               uses: actions/checkout@v3
               with:
@@ -51,20 +48,19 @@ jobs:
             - name: Build Rail Horizon
               run: |
                   source /opt/ros/humble/setup.bash
-                  export RMW_IMPLEMENTATION=rmw_fastrtps_cpp
                   colcon build --base-paths src --cmake-args -DCMAKE_BUILD_TYPE=Debug -DCMAKE_EXPORT_COMPILE_COMMANDS=ON --event-handlers console_cohesion+ --packages-up-to dsd_rail_horizon
                   colcon build --base-paths src --cmake-args -DCMAKE_BUILD_TYPE=Debug -DCMAKE_EXPORT_COMPILE_COMMANDS=ON --event-handlers console_cohesion+ --packages-up-to dsd_mission_profile
 
             - name: Run tests
               run: |
                   source /opt/ros/humble/setup.bash && source ./install/local_setup.bash
-                  export RMW_IMPLEMENTATION=rmw_fastrtps_cpp
-                  colcon test --packages-select dsd_rail_horizon_core dsd_mission_profile --return-code-on-test-failure --ctest-arg -E "overTheAirUpdateIsSucessfull"
+                  colcon test --packages-select dsd_rail_horizon_core dsd_mission_profile --return-code-on-test-failure
+                  colcon test-result --verbose --all
                   
-            - name: Upload build files
-              if: success() || failure()
-              uses: actions/upload-artifact@v3
-              with:
-                name: build-folder
-                path: |
-                  build
+            # - name: Upload build files
+            #   if: success() || failure()
+            #   uses: actions/upload-artifact@v3
+            #   with:
+            #     name: build-folder
+            #     path: |
+            #       build
