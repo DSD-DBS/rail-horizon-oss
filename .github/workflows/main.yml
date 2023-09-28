@@ -17,7 +17,7 @@ env:
     DB_MAP_VERSION: 12
     DB_MAP_ENDPOINT: DB_LAN
     DB_MAP_CATALOG: validate.s4r2.oss.4
-    PERSISTENT_STORAGE_ROOT_DIR: ./hdmap
+    PERSISTENT_STORAGE_ROOT_DIR: ${GITHUB_WORKSPACE}/map_data
     RMW_IMPLEMENTATION: rmw_fastrtps_cpp
 
 jobs:
@@ -59,8 +59,7 @@ jobs:
             - name: Print map directiory
               run: |
                   ls .
-                  ls ./hdmap
-                  ls ./hdmap/hdmap
+                  ls ${GITHUB_WORKSPACE}/map_data
                   
             - name: Print test results
               run: |
