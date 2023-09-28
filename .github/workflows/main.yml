@@ -17,7 +17,7 @@ env:
     DB_MAP_VERSION: 12
     DB_MAP_ENDPOINT: DB_LAN
     DB_MAP_CATALOG: validate.s4r2.oss.4
-    PERSISTENT_STORAGE_ROOT_DIR: ${GITHUB_WORKSPACE}/map_data
+    PERSISTENT_STORAGE_ROOT_DIR: ${{ github.workspace }}/map_data
     RMW_IMPLEMENTATION: rmw_fastrtps_cpp
 
 jobs:
@@ -62,6 +62,7 @@ jobs:
                   ls ${GITHUB_WORKSPACE}/map_data
                   
             - name: Print test results
+              if: success() || failure()
               run: |
                   source /opt/ros/humble/setup.bash && source ./install/local_setup.bash
                   colcon test-result --verbose --all
