@@ -58,6 +58,7 @@ jobs:
 
             - name: Print map directiory
               run: |
+                  ls .
                   ls ./hdmap
                   ls ./hdmap/hdmap
                   
