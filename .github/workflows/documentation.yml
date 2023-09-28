@@ -7,8 +7,7 @@ name: Rail Horizon Documentation
 on:
     push:
         branches:
-#             - main    
-            - '**'
+            - main    
 
 permissions:
     contents: write
