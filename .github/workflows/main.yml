@@ -56,6 +56,11 @@ jobs:
                   source /opt/ros/humble/setup.bash && source ./install/local_setup.bash
                   colcon test --packages-select dsd_rail_horizon dsd_rail_horizon_core dsd_mission_profile --ctest-arg -E "overTheAirUpdateIsSucessfull"
 
+            - name: Print map directiory
+              run: |
+                  ls ./hdmap
+                  ls ./hdmap/hdmap
+                  
             - name: Print test results
               run: |
                   source /opt/ros/humble/setup.bash && source ./install/local_setup.bash
