@@ -13,7 +13,6 @@ on:
             - '**'
 
 env:
-    GOPRIVATE: github.com/DSD-DBS/*
     DB_MAP_VERSION: 12
     DB_MAP_ENDPOINT: DB_LAN
     DB_MAP_CATALOG: validate.s4r2.oss.4
@@ -55,22 +54,8 @@ jobs:
               run: |
                   source /opt/ros/humble/setup.bash && source ./install/local_setup.bash
                   colcon test --packages-select dsd_rail_horizon dsd_rail_horizon_core dsd_mission_profile --ctest-arg -E "overTheAirUpdateIsSucessfull"
-
-            - name: Print map directiory
-              run: |
-                  ls .
-                  ls ${GITHUB_WORKSPACE}/map_data
                   
             - name: Print test results
-              if: success() || failure()
               run: |
                   source /opt/ros/humble/setup.bash && source ./install/local_setup.bash
                   colcon test-result --verbose --all
-                  
-            # - name: Upload build files
-            #   if: success() || failure()
-            #   uses: actions/upload-artifact@v3
-            #   with:
-            #     name: build-folder
-            #     path: |
-            #       build
