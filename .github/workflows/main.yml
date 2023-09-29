@@ -60,7 +60,13 @@ jobs:
                   source /opt/ros/humble/setup.bash && source ./install/local_setup.bash
                   colcon test-result --verbose --all
 
+            - name: Run code coverage
+              run: |
+                  gcovr --exclude-unreachable-branches --exclude-throw-branches -r . --filter src/ --exclude '.*tests/' --xml ${{github.workspace}}/build/coverage.xml
+
             - name: Upload coverage reports to Codecov
               uses: codecov/codecov-action@v3
-              env: 
-                  CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+              with:
+                  token: ${{ secrets.CODECOV_TOKEN }}
+                  file: ${{github.workspace}}/build/coverage.xml
+                  fail_ci_if_error: true
