@@ -13,23 +13,19 @@ on:
             - '**'
 
 env:
-    GOPRIVATE: github.com/DSD-DBS/*
     DB_MAP_VERSION: 12
     DB_MAP_ENDPOINT: DB_LAN
     DB_MAP_CATALOG: validate.s4r2.oss.4
-    PERSISTENT_STORAGE_ROOT_DIR: ./hdmap
+    PERSISTENT_STORAGE_ROOT_DIR: ${{ github.workspace }}/map_data
     RMW_IMPLEMENTATION: rmw_fastrtps_cpp
 
 jobs:
     build:
         runs-on: ubuntu-22.04
-
         defaults:
             run:
                 shell: bash
-
         steps:
-
             - name: Checkout Rail Horizon code including submodules recursively
               uses: actions/checkout@v3
               with:
@@ -51,20 +47,26 @@ jobs:
             - name: Build Rail Horizon
               run: |
                   source /opt/ros/humble/setup.bash
-                  export RMW_IMPLEMENTATION=rmw_fastrtps_cpp
                   colcon build --base-paths src --cmake-args -DCMAKE_BUILD_TYPE=Debug -DCMAKE_EXPORT_COMPILE_COMMANDS=ON --event-handlers console_cohesion+ --packages-up-to dsd_rail_horizon
                   colcon build --base-paths src --cmake-args -DCMAKE_BUILD_TYPE=Debug -DCMAKE_EXPORT_COMPILE_COMMANDS=ON --event-handlers console_cohesion+ --packages-up-to dsd_mission_profile
 
             - name: Run tests
               run: |
                   source /opt/ros/humble/setup.bash && source ./install/local_setup.bash
-                  export RMW_IMPLEMENTATION=rmw_fastrtps_cpp
-                  colcon test --packages-select dsd_rail_horizon_core dsd_mission_profile --return-code-on-test-failure --ctest-arg -E "overTheAirUpdateIsSucessfull"
+                  colcon test --packages-select dsd_rail_horizon dsd_rail_horizon_core dsd_mission_profile --ctest-arg -E "overTheAirUpdateIsSucessfull"
                   
-            - name: Upload build files
-              if: success() || failure()
-              uses: actions/upload-artifact@v3
+            - name: Print test results
+              run: |
+                  source /opt/ros/humble/setup.bash && source ./install/local_setup.bash
+                  colcon test-result --verbose --all
+
+            - name: Run code coverage
+              run: |
+                  gcovr --exclude-unreachable-branches --exclude-throw-branches -r . --filter src/ --exclude '.*tests/' --xml ${{github.workspace}}/build/coverage.xml
+
+            - name: Upload coverage reports to Codecov
+              uses: codecov/codecov-action@v3
               with:
-                name: build-folder
-                path: |
-                  build
+                  token: ${{ secrets.CODECOV_TOKEN }}
+                  file: ${{github.workspace}}/build/coverage.xml
+                  fail_ci_if_error: true
