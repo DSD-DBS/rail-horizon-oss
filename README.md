@@ -51,7 +51,7 @@ Some environment variables need to be set for the map service:
 ```bash
 export RMW_IMPLEMENTATION=rmw_fastrtps_cpp
 export PERSISTENT_STORAGE_ROOT_DIR=~/documents/maps
-export DB_MAP_VERSION=12
+export DB_MAP_VERSION=63
 export DB_MAP_ENDPOINT=DBMC
 export DB_MAP_CATALOG=validate.s4r2.oss.4
 ```

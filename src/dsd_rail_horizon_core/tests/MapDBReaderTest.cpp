@@ -127,7 +127,7 @@ protected:
 
     std::filesystem::path map_service_map_data_dir{MAP_PATH}; // MAP_PATH is defined by us in cmake as a macro
     std::string catalog = "validate.s4r2.oss.4";
-    std::size_t version = 12;
+    std::size_t version = 63;
     std::filesystem::path temp_map_dir;
 };
 

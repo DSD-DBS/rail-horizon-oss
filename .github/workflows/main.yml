@@ -13,7 +13,7 @@ on:
             - '**'
 
 env:
-    DB_MAP_VERSION: 12
+    DB_MAP_VERSION: 63
     DB_MAP_ENDPOINT: DB_LAN
     DB_MAP_CATALOG: validate.s4r2.oss.4
     PERSISTENT_STORAGE_ROOT_DIR: ${{ github.workspace }}/map_data
@@ -54,7 +54,7 @@ jobs:
               run: |
                   source /opt/ros/humble/setup.bash && source ./install/local_setup.bash
                   colcon test --packages-select dsd_rail_horizon dsd_rail_horizon_core dsd_mission_profile --ctest-arg -E "overTheAirUpdateIsSucessfull"
-                  
+
             - name: Print test results
               run: |
                   source /opt/ros/humble/setup.bash && source ./install/local_setup.bash
